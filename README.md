@@ -57,5 +57,6 @@ The following models were evaluated for predicting treatment needs:
 2) put the mental_health_model.h5 and predict_mental_health.py in same directory
 3) python run predict_mental_health.py   in terminal
 or you can run below code
-`python predict_mental_health.py --age 25 --gender 1 --family_history 1 --benefits 1 --care_options 1 --anonymity 1 --leave 1 --work_interfere 1`
-0=Yes and for geder 0= Male
+`python predict_mental_health.py --age 25 --gender 1 --family_history 1 --benefits 1 --care_options 1 --anonymity 1 --leave 1 --work_interfere 1
+`
+**Note** - 0=Yes and for gender 0=Male
