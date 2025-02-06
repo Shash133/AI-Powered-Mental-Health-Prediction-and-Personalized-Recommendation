@@ -1,3 +1,4 @@
+import argparse
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 import tensorflow as tf
@@ -97,18 +98,19 @@ def predict(symptom_input):
     else:
         return "The individual is predicted to be in good mental health, with no major concerns identified."
 
-# Function to get user input for prediction
+#import argparse
+
+# Function to get user input interactively
 def get_input():
     symptom_input = {}
 
-    # Prompt the user for each feature with clear explanations
+    # Prompt the user for each feature with explanations
     print("\nPlease enter the following details:")
-    
+
     # Age
     print("Age: Age of the individual (typically between 18 and 100)")
     symptom_input['Age'] = int(input("Enter your age (e.g., 29): "))  # Age of the individual
     
-
     # Gender
     print("Gender: Specify whether the individual is male, female, or trans.")
     symptom_input['Gender'] = input("Enter your gender (male/female/trans): ").lower()  # Gender of the individual
@@ -116,40 +118,74 @@ def get_input():
     print("Family History: Does the individual have a family history of mental health issues (1 for Yes, 0 for No)?")
     symptom_input['family_history'] = int(input("Enter family history (1 for Yes, 0 for No): "))  # Family history of mental health issues
     
-
     # Employee Benefits
     print("Benefits: Does the individual have access to employee benefits like health insurance or paid leave?")
     symptom_input['benefits'] = int(input("Enter benefits (Employee Benefits, 1 for Yes, 0 for No): "))  # Whether the individual has access to employee benefits
-   
-
+    
     print("Care Options: Does the individual have access to mental health care resources such as therapy or counseling?")
-
     symptom_input['care_options'] = int(input("Enter care options (access to mental health care resources) (1 for Yes, 0 for No): "))  # Access to mental health care resources
 
     print("Anonymity: Does the individual feel their identity is protected (e.g., anonymous participation in the survey)?")
-    # Anonymity
     symptom_input['anonymity'] = int(input("Enter anonymity (0 for No, 1 for Yes): "))  # Whether the individual feels their identity is anonymous in the survey/intervention
 
     # Leave
     print("Leave: Does the individual have access to paid time off or sick leave for personal or mental health reasons?")
-
     symptom_input['leave'] = int(input("Enter leave (1 for Yes, 0 for No): "))  # Whether the individual has access to leave (e.g., paid time off or sick leave)
 
     # Work Interference
     print("Work Interference: Does mental health interfere with the individual's work performance?")
     symptom_input['work_interfere'] = int(input("Enter work interference (1 for Yes, 0 for No): "))  # Whether mental health issues interfere with work performance
 
-    # Self-Employed
-    print("Self-Employed: Is the individual self-employed or do they work for an organization (Yes for self-employed, No for employed by a company)?")
-
-    symptom_input['self_employed'] = input("Enter self-employed status (Yes/No): ").lower()  # Whether the individual is self-employed or works for a company
-
     return symptom_input
 
 
-# Get input from the user
-user_input = get_input()
+def predict(user_input):
+    # Assuming a trained model is loaded and we perform predictions here
+    # For now, we will simply return a mocked prediction output
+    predicted_status = "Needs Treatment" if user_input['work_interfere'] == 1 else "No Treatment Needed"
+    return predicted_status
+
+
+def main():
+    # Command-line arguments parsing
+    parser = argparse.ArgumentParser(description="Mental Health Prediction and Recommendation CLI")
+    
+    # Define arguments for user input (optional because we also use `get_input`)
+    parser.add_argument('--age', type=int, help='Enter Age')
+    parser.add_argument('--gender', type=int, choices=[0, 1], help='Enter Gender (0 = Female, 1 = Male)')
+    parser.add_argument('--family_history', type=int, choices=[0, 1], help='Enter family history (1 for Yes, 0 for No)')
+    parser.add_argument('--benefits', type=int, choices=[0, 1], help='Enter benefits (Employee Benefits, 1 for Yes, 0 for No)')
+    parser.add_argument('--care_options', type=int, choices=[0, 1], help='Enter care options (1 for Yes, 0 for No)')
+    parser.add_argument('--anonymity', type=int, choices=[0, 1], help='Enter anonymity (0 for No, 1 for Yes)')
+    parser.add_argument('--leave', type=int, choices=[0, 1], help='Enter leave (1 for Yes, 0 for No)')
+    parser.add_argument('--work_interfere', type=int, choices=[0, 1], help='Enter work interference (1 for Yes, 0 for No)')
+
+    args = parser.parse_args()
+
+    # Use either command-line input or interactive input (if no command-line arguments provided)
+    if args.age is None:
+        user_input = get_input()
+    else:
+        user_input = {
+            'Age': args.age,
+            'Gender': args.gender,
+            'family_history': args.family_history,
+            'benefits': args.benefits,
+            'care_options': args.care_options,
+            'anonymity': args.anonymity,
+            'leave': args.leave,
+            'work_interfere': args.work_interfere
+        }
+
+    # Get the prediction result
+    predicted_status = predict(user_input)
+    
+    # Display the result
+    print(f"Prediction: {predicted_status}")
+
+
+if __name__ == "__main__":
+    main()
 
 # Get the predicted mental health status
-predicted_status = predict(user_input)
-print(predicted_status)
+
