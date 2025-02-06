@@ -1,5 +1,6 @@
 # Mental Health Treatment Prediction Model
 
+**Note:** To get detailed explanations and insights, run the provided Jupyter Notebook (`Mental_Health_Prediction.ipynb`) file. Through the inference script (`predict_mental_health.py`), you will only receive the prediction for mental health treatment.
 ## 🔧 Data Preprocessing
 
 ### Handling Missing Data
