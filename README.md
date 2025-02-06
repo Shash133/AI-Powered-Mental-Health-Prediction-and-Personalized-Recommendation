@@ -53,4 +53,5 @@ The following models were evaluated for predicting treatment needs:
 ## 🚀 How to Run
 
 1) pip install -r requirements.txt
-2) In GEMINI_API_KEY put your api key
+2) put the mental_health_model.h5 and predict_mental_health.py in same directory
+3) python run predict_mental_health.py   in terminal
